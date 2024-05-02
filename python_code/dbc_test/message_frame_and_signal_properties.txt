@@ -1,0 +1,45 @@
+message('ECM_TorqueControl_N2', 0x15b, False, 5, None)
+        _frame_id: 347
+        _header_id: None
+        _header_byte_order: big_endian
+        _is_extended_frame: False
+        _is_fd: False
+        _name: ECM_TorqueControl_N2
+        _length: 5
+        _unused_bit_pattern: 255
+        _signals: [signal('Com_tqTarEngWoTMReq', 7, 12, 'big_endian', False, None, 0.5, -400, -400, 1647.5, 'None', False, None, None, None, None), signal('Com_tqEstimdEngWoTMReq', 11, 12, 'big_endian', False, None, 0.5, -400, -400, 1647, 'None', False, None, None, None, None), signal('Com_flgFootUp', 31, 1, 'big_endian', False, None, 1, 0, 0, 1, 'None', False, None, None, None, None), signal('Com_flgTqDwnInhb', 30, 1, 'big_endian', False, None, 1, 0, 0, 1, 'None', False, None, None, None, None), signal('Com_stLockUpReq', 28, 2, 'big_endian', False, None, 1, 0, 0, 3, 'None', False, None, None, None, None)]
+        _signal_dict: {'Com_tqTarEngWoTMReq': signal('Com_tqTarEngWoTMReq', 7, 12, 'big_endian', False, None, 0.5, -400, -400, 1647.5, 'None', False, None, None, None, None), 'Com_tqEstimdEngWoTMReq': signal('Com_tqEstimdEngWoTMReq', 11, 12, 'big_endian', False, None, 0.5, -400, -400, 1647, 'None', False, None, None, None, None), 'Com_flgFootUp': signal('Com_flgFootUp', 31, 1, 'big_endian', False, None, 1, 0, 0, 1, 'None', False, None, None, None, None), 'Com_flgTqDwnInhb': signal('Com_flgTqDwnInhb', 30, 1, 'big_endian', False, None, 1, 0, 0, 1, 'None', False, None, None, None, None), 'Com_stLockUpReq': signal('Com_stLockUpReq', 28, 2, 'big_endian', False, None, 1, 0, 0, 3, 'None', False, None, None, None, None)}
+        _contained_messages: None
+        _comments: None
+        _senders: ['ECM']
+        _send_type: None
+        _cycle_time: 10
+        _dbc: <cantools.database.can.formats.dbc_specifics.DbcSpecifics object at 0x000001FB1C5E8B50>
+        _autosar: None
+        _bus_name: None
+        _signal_groups: []
+        _codecs: {'signals': [signal('Com_tqTarEngWoTMReq', 7, 12, 'big_endian', False, None, 0.5, -400, -400, 1647.5, 'None', False, None, None, None, None), signal('Com_tqEstimdEngWoTMReq', 11, 12, 'big_endian', False, None, 0.5, -400, -400, 1647, 'None', False, None, None, None, None), signal('Com_flgFootUp', 31, 1, 'big_endian', False, None, 1, 0, 0, 1, 'None', False, None, None, None, None), signal('Com_flgTqDwnInhb', 30, 1, 'big_endian', False, None, 1, 0, 0, 1, 'None', False, None, None, None, None), signal('Com_stLockUpReq', 28, 2, 'big_endian', False, None, 1, 0, 0, 3, 'None', False, None, None, None, None)], 'formats': Formats(big_endian=<bitstruct.c.CompiledFormatDict object at 0x000001FB1C5488D0>, little_endian=<bitstruct.c.CompiledFormatDict object at 0x000001FB1C549080>, padding_mask=10239), 'multiplexers': {}}
+        _signal_tree: ['Com_tqTarEngWoTMReq', 'Com_tqEstimdEngWoTMReq', 'Com_flgFootUp', 'Com_flgTqDwnInhb', 'Com_stLockUpReq']
+        _strict: True
+        _protocol: None
+         signal('Com_tqTarEngWoTMReq', 7, 12, 'big_endian', False, None, 0.5, -400, -400, 1647.5, 'None', False, None, None, None, None)
+                name: Com_tqTarEngWoTMReq
+                conversion: LinearConversion(scale=0.5, offset=-400, is_float=False)
+                minimum: -400
+                maximum: 1647.5
+                start: 7
+                length: 12
+                byte_order: big_endian
+                is_signed: False
+                raw_initial: None
+                initial: None
+                raw_invalid: None
+                invalid: None
+                unit: None
+                dbc: <cantools.database.can.formats.dbc_specifics.DbcSpecifics object at 0x000001FB1C6543A0>
+                receivers: []
+                is_multiplexer: False
+                multiplexer_ids: None
+                multiplexer_signal: None
+                spn: None
+                comments: None
