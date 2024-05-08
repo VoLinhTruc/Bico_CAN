@@ -2,9 +2,9 @@
 This is simple example to send random data to CAN bus in 20Hz rate, using delay (not recommended in real implementations).
 */
 
+#include "Arduino.h"
 #include "STM32_CAN.h"
 
-#define MESSAGE_MAX_SIZE 16
 #define START_OF_FRAME_TOKEN 0xAA
 #define END_OF_FRAME_TOKEN 0xBB
 #define FRAME_DLC_INDEX 4
@@ -21,7 +21,7 @@ typedef enum
   MESSAGE_RECEIVING_DONE_NOT_OK
 } Message_Receiving_State;
 
-STM32_CAN Can(CAN1, DEF); //Use PA11/12 pins for CAN1.
+STM32_CAN Can(CAN1, ALT); //Use PA11/12 pins for CAN1.
 
 static CAN_message_t CAN_TX_msg;
 static CAN_message_t CAN_RX_msg;
