@@ -1,0 +1,50 @@
+/*
+This is simple example to send random data to CAN bus in 20Hz rate, using delay (not recommended in real implementations).
+*/
+
+
+// platformio.ini file:
+// ; PlatformIO Project Configuration File
+// ;
+// ;   Build options: build flags, source filter
+// ;   Upload options: custom upload port, speed and extra flags
+// ;   Library options: dependencies, extra library storages
+// ;   Advanced options: extra scripting
+// ;
+// ; Please visit documentation for the other options and examples
+// ; https://docs.platformio.org/page/projectconf.html
+
+// [env:genericSTM32F103C6]
+// platform = ststm32
+// board = genericSTM32F103C6
+// framework = arduino
+// debug_tool = stlink
+// upload_protocol = stlink
+// upload_flags = 
+//     -c
+//     hla_serial 152805012612344D314B4E00
+// build_flags =
+//     -D HAL_PCD_MODULE_ENABLED,
+//     -D USBD_USE_CDC,
+//     -D USBCON,
+
+// the function SerialUSB.write in default library code not work,
+// to make it work, in USBSerial.cpp, at the line of code 
+// while (rest > 0 && CDC_connected())
+// replace the "CDC_connected()" to "1" because the CDC_connected() is never TRUE
+
+
+#include "Arduino.h"
+
+void setup() {
+  SerialUSB.begin(115200);
+  pinMode(PC13, OUTPUT);
+}
+
+void loop() {
+  if (SerialUSB.available() > 0)
+  {
+    char c = SerialUSB.read();
+    SerialUSB.write(c);
+  }
+}
