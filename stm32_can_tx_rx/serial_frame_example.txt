@@ -1,1 +1,5 @@
+Start of frame (1 byte) | Timestamp (4 byte) (LSB) | DLC (1 byte) | Arbitration ID (4 byte) (LSB) | Payload (DLC byte) | End of frame (1 byte)
+
 AA 66 73 00 00 08 01 00 00 00 11 22 33 44 55 66 77 88 BB
+
+AA 12 45 85 21 05 12 07 00 00 11 22 33 44 55 BB
