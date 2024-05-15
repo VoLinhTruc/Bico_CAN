@@ -53,7 +53,7 @@ def main():
     try:
         while True:
             try:
-                tp_layer.send(b'12345678901234567890123', send_timeout=2)    # Blocking send, raise on error
+                tp_layer.send(b'123', send_timeout=2)    # Blocking send, raise on error
                 # print("Payload transmission successfully completed.")     # Success is guaranteed because send() can raise
             except isotp.BlockingSendFailure:   # Happens for any kind of failure, including timeouts
                 print("Send failed")

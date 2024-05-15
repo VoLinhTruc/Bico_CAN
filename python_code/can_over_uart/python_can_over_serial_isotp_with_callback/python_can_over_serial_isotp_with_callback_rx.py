@@ -9,7 +9,7 @@ TX_ADDR = 0x234
 RX_ADDR = 0x123
 
 
-bus = can.Bus(interface="serial", channel="COM5")
+bus = can.Bus(interface="serial", channel="COM10")
 
 
 def my_error_handler(error):

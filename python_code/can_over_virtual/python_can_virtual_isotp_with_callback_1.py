@@ -92,7 +92,7 @@ def bus2_task(stack: isotp.CanStack, stop_event):
     stack.start()
     while not stop_event.is_set():
         try:
-            stack.send(b'12345678901234567890123', send_timeout=2)    # Blocking send, raise on error
+            stack.send(b'12', send_timeout=2)    # Blocking send, raise on error
             # print("Payload transmission successfully completed.")     # Success is guaranteed because send() can raise
         except isotp.BlockingSendFailure:   # Happens for any kind of failure, including timeouts
             print("Send failed")
