@@ -47,7 +47,7 @@ def my_rxfn_2(timeout:float) -> Optional[isotp.CanMessage]:
     if msg.arbitration_id <= 0x7FF:
         msg.arbitration_id &= 0x7FF
         msg.is_extended_id = False
-    print(f'my_rxfn_1 - {msg}')
+    print(f'my_rxfn_2 - {msg}')
     return isotp.CanMessage(arbitration_id=msg.arbitration_id, data=msg.data, dlc=msg.dlc, extended_id=msg.is_extended_id)
 
 
@@ -58,11 +58,24 @@ def my_txfn_2(isotp_msg:isotp.CanMessage):
     msg.data = (isotp_msg.data)
     msg.dlc = (isotp_msg.dlc)
     msg.is_extended_id = (isotp_msg.is_extended_id)
+    msg.is_rx = False
     bus2.send(msg)
     print(f'my_txfn_2 - {msg}')
 
+TX_1_TARGET_ADDR = 0x1
+TX_1_SOURCE_ADDR = 0x2
+RX_1_TARGET_ADDR = 0x3
+RX_1_SOURCE_ADDR = 0x4
 
-addr1 = isotp.Address(isotp.AddressingMode.Normal_11bits, rxid=0x123, txid=0x234)
+RX_2_TARGET_ADDR = 0xF1
+RX_2_SOURCE_ADDR = 0x10
+TX_2_TARGET_ADDR = 0x10
+TX_2_SOURCE_ADDR = 0xF1
+
+addr1 = isotp.AsymmetricAddress(
+    tx_addr=isotp.Address(isotp.AddressingMode.NormalFixed_29bits, target_address=TX_1_TARGET_ADDR, source_address=TX_1_SOURCE_ADDR, tx_only=True),
+    rx_addr=isotp.Address(isotp.AddressingMode.NormalFixed_29bits, target_address=RX_1_TARGET_ADDR, source_address=RX_1_SOURCE_ADDR, rx_only=True)   # txid is not required
+)
 params1 = {
     'blocking_send' : True,
     # 'tx_padding': 0xFF
@@ -70,7 +83,10 @@ params1 = {
 tp_layer1 = isotp.TransportLayer(address=addr1, error_handler=my_error_handler, params=params1, rxfn=my_rxfn_1, txfn=my_txfn_1)
 
 
-addr2 = isotp.Address(isotp.AddressingMode.Normal_11bits, rxid=0x234, txid=0x123)
+addr2 = isotp.AsymmetricAddress(
+    tx_addr=isotp.Address(isotp.AddressingMode.NormalFixed_29bits, target_address=TX_2_TARGET_ADDR, source_address=TX_2_SOURCE_ADDR, tx_only=True),
+    rx_addr=isotp.Address(isotp.AddressingMode.NormalFixed_29bits, target_address=RX_2_TARGET_ADDR, source_address=RX_2_SOURCE_ADDR, rx_only=True)   # txid is not required
+)
 params2 = {
     'blocking_send' : True,
     # 'tx_padding': 0xFF
@@ -92,7 +108,7 @@ def bus2_task(stack: isotp.CanStack, stop_event):
     stack.start()
     while not stop_event.is_set():
         try:
-            stack.send(b'1234', send_timeout=0.1)    # Blocking send, raise on error
+            stack.send(b'123456789', send_timeout=0.1)    # Blocking send, raise on error
             # print("Payload transmission successfully completed.")     # Success is guaranteed because send() can raise
         except isotp.BlockingSendFailure:   # Happens for any kind of failure, including timeouts
             print("Send failed")

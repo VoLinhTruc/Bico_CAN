@@ -13,6 +13,7 @@ This is simple example to send random data to CAN bus in 20Hz rate, using delay 
 #define CAN_ID_LENGTH_IN_UART_MESSAGE 4
 #define CAN_PAYLOAD_INDEX_IN_UART_MESSAGE (CAN_ID_INDEX_IN_UART_MESSAGE + CAN_ID_LENGTH_IN_UART_MESSAGE)
 #define UART_MESSAGE_MAX_SIZE 17
+#define VALUE_11BIT_MAX 0x7FF
 
 typedef enum 
 {
@@ -107,6 +108,8 @@ void loop() {
         ((uint32_t)uart_receving_message_buf[CAN_ID_INDEX_IN_UART_MESSAGE+1] << 8) |\
          ((uint32_t)uart_receving_message_buf[CAN_ID_INDEX_IN_UART_MESSAGE+0]);
 
+      CAN_TX_msg.flags.extended = (CAN_TX_msg.id > VALUE_11BIT_MAX);
+      
       for (uint8_t i = 0; i < CAN_TX_msg.len; i++)
       {
         CAN_TX_msg.buf[i] = uart_receving_message_buf[CAN_PAYLOAD_INDEX_IN_UART_MESSAGE + i];

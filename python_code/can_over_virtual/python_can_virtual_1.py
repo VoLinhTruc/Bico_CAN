@@ -18,7 +18,7 @@ while True:
             break
         else:
             # assert msg1 == msg2
-            print(msg2.data)
+            print(msg2)
     
     time.sleep(1)
     

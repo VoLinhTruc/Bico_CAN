@@ -4,7 +4,7 @@ import threading
 
 import can
 
-bus = can.Bus(interface="serial", channel="COM5")
+bus = can.Bus(interface="serial", channel="COM4")
 
 while (1):
     # tx_msg = can.Message(
@@ -15,6 +15,7 @@ while (1):
     
     rx_msg = bus.recv(1)
     if rx_msg is not None:
-        print(f"rx: {rx_msg}")
+        if (rx_msg.arbitration_id == 0x18DA10F1) or (rx_msg.arbitration_id == 0x18DAF110):
+            print(f"rx: {rx_msg}") 
     
     # time.sleep(0.001)
