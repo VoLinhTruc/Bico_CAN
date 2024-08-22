@@ -6,8 +6,10 @@ import time
 from typing import Optional
 
 
-TX_ADDR = 0x712
-RX_ADDR = 0x71A
+# TX_ADDR = 0x791
+# RX_ADDR = 0x719
+TX_ADDR = 0x719
+RX_ADDR = 0x791
 
 
 bus = can.Bus(interface="serial", channel="COM4")
