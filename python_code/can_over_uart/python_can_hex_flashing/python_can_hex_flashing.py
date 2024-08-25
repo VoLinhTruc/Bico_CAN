@@ -4,8 +4,8 @@ import can
 from datetime import datetime
 
 
-CAN_TX_ID = 0x169
-CAN_RX_ID = 0x196
+CAN_TX_ID = 0x719
+CAN_RX_ID = 0x791
 
 
 def read_bin_file(bin_file):
@@ -17,6 +17,19 @@ def read_bin_file(bin_file):
 
 def send_can_messages(bus, can_tx_id, can_rx_id, data, chunk_size=4):
     msg = can.Message(arbitration_id=can_tx_id,
+                          data=[0x07, 0x11, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55],
+                          is_extended_id=False)
+    try:
+        bus.send(msg)
+        print(f"tx: {msg}")
+    except can.CanError:
+        print("Message NOT sent")
+    
+    time.sleep(0.5)
+        
+        
+
+    msg = can.Message(arbitration_id=can_tx_id,
                           data=[0x07, 0x34, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55],
                           is_extended_id=False)
     try:
@@ -25,35 +38,43 @@ def send_can_messages(bus, can_tx_id, can_rx_id, data, chunk_size=4):
     except can.CanError:
         print("Message NOT sent")
     
-    rx_msg = bus.recv(20)
+    rx_msg = bus.recv(5)
     if rx_msg is not None:
         print(f"rx: {rx_msg}")
         
         
     if (rx_msg.arbitration_id == can_rx_id) and (rx_msg.data[1] == 0x74):
         for i in range(0, len(data), chunk_size):
-            data_chunk = [0x08, 0x36]
+            data_chunk = [0x08, 0x36, 0x00]
             data_chunk.extend(data[i:i+chunk_size])
-            data_chunk.extend([0xFF, 0xFF])
+            data_chunk.extend([0x00])
             print(f'\t\t{round(i*100/len(data))}%')
             msg = can.Message(arbitration_id=can_tx_id,
                             data=data_chunk,
                             is_extended_id=False)
+            # send_success = False
+            # while (send_success == False):
             try:
                 bus.send(msg)
                 print(f"tx: {msg}")
             except can.CanError:
                 print("Message NOT sent")
-            time.sleep(0.02)
             
-            rx_msg = bus.recv(1)
+            rx_msg = bus.recv(5)
+            print(f"rx: {rx_msg}")
             if rx_msg is not None:
                 if (rx_msg.arbitration_id == can_rx_id) and (rx_msg.data[1] == 0x76):
+                    send_success = True
                     continue
+                    # pass
                 else:
-                    print("flashing Failed")
+                    print("flashing Failed: wrong response")
                     break
-            
+            else:
+                print("flashing Failed: timeout")
+                break
+                    
+                
             
     msg = can.Message(arbitration_id=can_tx_id,
                           data=[0x07, 0x37, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55],
@@ -68,7 +89,7 @@ def send_can_messages(bus, can_tx_id, can_rx_id, data, chunk_size=4):
 bus = can.Bus(interface="serial", channel="COM4")
 
 
-bin_data = read_bin_file("flashing.bin")
+bin_data = read_bin_file("ota_app.bin")
 
 start_time = datetime.now().time()
 start_time_total_seconds = start_time.hour * 3600 + start_time.minute * 60 + start_time.second

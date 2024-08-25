@@ -1,8 +1,8 @@
 import can
 import struct
 
-CAN_TX_ID = 0x196
-CAN_RX_ID = 0x169
+CAN_TX_ID = 0x791
+CAN_RX_ID = 0x719
 
 
 bus = can.Bus(interface="serial", channel="COM10")
