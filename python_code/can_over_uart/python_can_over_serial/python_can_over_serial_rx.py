@@ -15,7 +15,8 @@ while (1):
     
     rx_msg = bus.recv(1)
     if rx_msg is not None:
-        if (rx_msg.arbitration_id == 0x18DA10F1) or (rx_msg.arbitration_id == 0x18DAF110):
+        # if (rx_msg.arbitration_id == 0x18DA10F1) or (rx_msg.arbitration_id == 0x18DAF110):
+        if (True):
             print(f"rx: {rx_msg}") 
     
     # time.sleep(0.001)

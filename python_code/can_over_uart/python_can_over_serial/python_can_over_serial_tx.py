@@ -4,7 +4,7 @@ import threading
 
 import can
 
-bus = can.Bus(interface="serial", channel="COM4")
+bus = can.Bus(interface="serial", channel="COM18")
 
 count = 0
 
@@ -29,5 +29,5 @@ while (1):
     # rx: Timestamp:     2101.364000    ID: 00000712    X Rx                DL:  8    30 aa 32 33 34 35 36 60
     # rx: Timestamp:     2101.380000    ID: 00000712    X Rx                DL:  8    30 aa 32 33 34 35 36 61
     # time.sleep(0.015)
-    time.sleep(1000)
+    time.sleep(0.02)
     

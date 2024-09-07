@@ -1,3 +1,4 @@
+import time
 import can
 import struct
 
@@ -5,17 +6,17 @@ CAN_TX_ID = 0x791
 CAN_RX_ID = 0x719
 
 
-bus = can.Bus(interface="serial", channel="COM10")
+bus = can.Bus(interface="serial", channel="COM4")
 
 data = []
 
 while (1):    
-    rx_msg = bus.recv(5)
+    rx_msg = bus.recv(20)
     if rx_msg is not None:
         if (rx_msg.arbitration_id == CAN_RX_ID):
             print(f"rx: {rx_msg}") 
             if rx_msg.data[1] == 0x36:
-                data.extend(rx_msg.data[2:6])
+                data.extend(rx_msg.data[3:7])
     
     if (rx_msg.arbitration_id == CAN_RX_ID):     
         tx_msg = can.Message(
