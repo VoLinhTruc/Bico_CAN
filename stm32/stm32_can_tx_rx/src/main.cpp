@@ -152,5 +152,7 @@ void loop() {
     }
 
     Serial.write(END_OF_UART_MESSAGE_TOKEN);
+
+    digitalWrite(PC13, !digitalRead(PC13));
   }
 }
